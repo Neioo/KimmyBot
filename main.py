@@ -57,7 +57,8 @@ intents.members = True
 
 bot = commands.Bot(
     command_prefix="!k ",
-    intents=intents
+    intents=intents,
+    help_command=None,
 )
 
 
@@ -362,6 +363,27 @@ async def on_message(message):
 # BASIC COMMANDS
 # =========================================================
 
+@bot.command(name="help")
+async def help_command(ctx):
+    """Show Kimmy's available commands and examples."""
+    await ctx.send(
+        "**Kimmy commands**\n"
+        "Use `!k ` before each command.\n\n"
+        "`!k hello` — Check that Kimmy is online.\n"
+        "`!k whatgame2play valheim lol cod` — Pick a game randomly.\n\n"
+        "**One-time reminders**\n"
+        "`!k remind_once 18:30 Take the chicken out`\n"
+        "`!k remind_once 2026-09-20 18:30 Birthday dinner`\n\n"
+        "**Monthly reminders**\n"
+        "`!k remind_monthly 15 09:00 Pay the bills`\n"
+        "`!k remind_monthly 15 -- Pay the bills`\n\n"
+        "`!k reminders` — List active reminders.\n"
+        "`!k remove_reminder O1` — Remove a one-time reminder.\n"
+        "`!k remove_reminder M2` — Remove a monthly reminder.\n\n"
+        "Times use Philippine time (Asia/Manila)."
+    )
+
+
 @bot.command()
 async def hello(ctx):
     await ctx.send(
@@ -575,7 +597,7 @@ async def run_once_reminder(reminder_id):
 async def restore_once_reminders():
     """
     When the bot starts, restore all pending
-    one-time reminders from SQLite.
+    one-time reminders from PostgreSQL.
     """
 
     reminders = get_all_reminders()
