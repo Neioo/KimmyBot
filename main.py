@@ -42,6 +42,27 @@ logging.basicConfig(
 
 logger = logging.getLogger("kimmy")
 
+COMFORT_MESSAGES = (
+    "hey babe, take a breath with me. You do not have to fix everything tonight.",
+    "come here, sweetheart. You have been carrying a lot, so be gentle with yourself.",
+    "baby, a hard day does not make you a failure. You are still doing your best.",
+    "hey love, drink some water and take one small step. That is enough for now.",
+    "you are allowed to rest, handsome. The world can wait a little while.",
+    "I know things feel heavy right now, but you have made it through heavy days before.",
+    "sweetheart, you do not need to be strong every second. Let yourself breathe.",
+    "hey babe, I am proud of you for making it this far today.",
+    "it is okay if today was messy, love. Tomorrow is still there for you.",
+    "you matter more than whatever went wrong today, okay?",
+    "come on, handsome. Unclench your shoulders and give yourself a little kindness.",
+    "baby, you are not behind in life. You are moving at your own pace.",
+    "hey love, one bad moment cannot erase all the good in you.",
+    "you do not have to earn rest, sweetheart. You are allowed to take it.",
+    "breathe in, breathe out, babe. You are safe to slow down for a minute.",
+    "I hope you remember that you are more loved than your brain lets you believe on hard days.",
+    "hey handsome, you are doing better than you think. I mean it.",
+    "it is okay to ask for help, love. You do not have to carry everything alone.",
+)
+
 
 # =========================================================
 # DISCORD
@@ -370,6 +391,7 @@ async def help_command(ctx):
         "**Kimmy commands**\n"
         "Use `!k ` before each command.\n\n"
         "`!k hello` — Check that Kimmy is online.\n"
+        "`!k comfortme` — Get a little encouragement.\n"
         "`!k whatgame2play valheim lol cod` — Pick a game randomly.\n\n"
         "**One-time reminders**\n"
         "`!k remind_once 18:30 Take the chicken out`\n"
@@ -388,6 +410,21 @@ async def help_command(ctx):
 async def hello(ctx):
     await ctx.send(
         "Hello, I'm Kimmy! How can I help you?"
+    )
+
+
+@bot.command()
+async def comfortme(ctx):
+    """Send the caller a randomly selected comforting message."""
+    comfort_message = random.choice(COMFORT_MESSAGES)
+
+    await ctx.send(
+        f"{ctx.author.mention}, {comfort_message}",
+        allowed_mentions=discord.AllowedMentions(
+            users=True,
+            roles=False,
+            everyone=False,
+        ),
     )
 
 
