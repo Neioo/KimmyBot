@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: kimmy
+    runtime: python
+    plan: free
+    buildCommand: uv sync --frozen --no-dev
+    startCommand: uv run --no-sync python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10"
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
